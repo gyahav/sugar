@@ -8,5 +8,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface NotNull {
-    String value() default "";
+    String strDef() default "";
+    int intDef() default 0;
 }
