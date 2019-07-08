@@ -14,5 +14,9 @@ public class SugarActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        new Model().save();
+        new Model(1111L, "2222").save();
+
     }
 }

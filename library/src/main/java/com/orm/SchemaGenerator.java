@@ -34,6 +34,7 @@ import static com.orm.util.ContextUtil.getAssets;
 public class SchemaGenerator {
     public static final String NULL = " NULL";
     public static final String NOT_NULL = " NOT NULL";
+    public static final String DEFAULT = " DEFAULT";
     public static final String UNIQUE = " UNIQUE";
     public static final String SUGAR = "Sugar";
 
@@ -236,6 +237,11 @@ public class SchemaGenerator {
                             sb.delete(sb.length() - 5, sb.length());
                         }
                         sb.append(NOT_NULL);
+                        String constraint = column.getAnnotation(NotNull.class).value();
+
+                        if(!constraint.isEmpty()) {
+                            sb.append(DEFAULT).append(" ").append(constraint);
+                        }
                     }
 
                     if (columnAnnotation.unique()) {
@@ -250,6 +256,11 @@ public class SchemaGenerator {
                             sb.delete(sb.length() - 5, sb.length());
                         }
                         sb.append(NOT_NULL);
+                        String constraint = column.getAnnotation(NotNull.class).value();
+
+                        if(!constraint.isEmpty()) {
+                            sb.append(DEFAULT).append(" ").append(constraint);
+                        }
                     }
 
                     if (column.isAnnotationPresent(Unique.class)) {
