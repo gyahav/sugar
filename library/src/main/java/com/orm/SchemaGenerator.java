@@ -237,7 +237,15 @@ public class SchemaGenerator {
                             sb.delete(sb.length() - 5, sb.length());
                         }
                         sb.append(NOT_NULL);
-                        String constraint = column.getAnnotation(NotNull.class).value();
+                        String constraint = "";
+                        switch (columnType) {
+                            case "INTEGER":
+                               constraint =  String.valueOf(column.getAnnotation(NotNull.class).intDef());
+                               break;
+                            case "TEXT":
+                                constraint =  String.valueOf(column.getAnnotation(NotNull.class).strDef());
+                                break;
+                        }
 
                         if(!constraint.isEmpty()) {
                             sb.append(DEFAULT).append(" ").append(constraint);
@@ -256,7 +264,15 @@ public class SchemaGenerator {
                             sb.delete(sb.length() - 5, sb.length());
                         }
                         sb.append(NOT_NULL);
-                        String constraint = column.getAnnotation(NotNull.class).value();
+                        String constraint = "";
+                        switch (columnType) {
+                            case "INTEGER":
+                                constraint =  String.valueOf(column.getAnnotation(NotNull.class).intDef());
+                                break;
+                            case "TEXT":
+                                constraint =  column.getAnnotation(NotNull.class).strDef();
+                                break;
+                        }
 
                         if(!constraint.isEmpty()) {
                             sb.append(DEFAULT).append(" ").append(constraint);
