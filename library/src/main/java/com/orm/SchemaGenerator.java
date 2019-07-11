@@ -182,7 +182,20 @@ public class SchemaGenerator {
                     if (columnType.endsWith(" NULL")) {
                         sb.delete(sb.length() - 5, sb.length());
                     }
-                    sb.append(" NOT NULL");
+                    sb.append(NOT_NULL);
+                    String constraint = "";
+                    switch (columnType) {
+                        case "INTEGER":
+                            constraint =  String.valueOf(column.getAnnotation(NotNull.class).intDef());
+                            break;
+                        case "TEXT":
+                            constraint =  column.getAnnotation(NotNull.class).strDef();
+                            break;
+                    }
+
+                    if(!constraint.isEmpty()) {
+                        sb.append(DEFAULT).append(" ").append(constraint);
+                    }
                 }
 
                 // Unique is not working on ALTER TABLE
@@ -243,7 +256,7 @@ public class SchemaGenerator {
                                constraint =  String.valueOf(column.getAnnotation(NotNull.class).intDef());
                                break;
                             case "TEXT":
-                                constraint =  String.valueOf(column.getAnnotation(NotNull.class).strDef());
+                                constraint =  column.getAnnotation(NotNull.class).strDef();
                                 break;
                         }
 
